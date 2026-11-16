@@ -1,0 +1,157 @@
+<?xml version="1.0" ?>
+<robot name="amr" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Base Footprint Link -->
+    <link name="base_footprint"/>
+
+    <!-- Base Link -->
+    <link name="base_link">
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/base_link.stl"
+                        scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        
+    </link>
+
+
+    <joint name="base_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0.063" rpy="0 0 0"/>
+    </joint>
+
+
+    <link name="shoulder_link">
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/shoulder_link.stl"
+                        scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        
+    </link>
+
+
+    <joint name="shoulder_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="shoulder_link"/>
+        <origin xyz="0.00 0.00 0.00" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+
+    <link name="lower_arm_link">
+
+        <visual>
+            <origin xyz="-0.013 -0.018 -0.039" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/lower_arm_link.stl"
+                        scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        
+    </link>
+
+
+    <joint name="shoulder_joint_2" type="revolute">
+        <parent link="shoulder_link"/>
+        <child link="lower_arm_link"/>
+        <origin xyz="0.013 0.018 0.039" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="-1.5708" upper="1.5708" effort="100" velocity="1.0"/>
+    </joint>
+
+
+    <link name="upper_arm_link">
+
+        <visual>
+            <origin xyz="-0.014 -0.002 -0.158" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/upper_arm_link.stl"
+                        scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        
+    </link>
+
+
+    <joint name="elbow_joint" type="revolute">
+        <parent link="lower_arm_link"/>
+        <child link="upper_arm_link"/>
+        <origin xyz="0.001 -0.016 0.119" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="-1.5708" upper="1.5708" effort="100" velocity="1.0"/>
+    </joint>
+
+
+    <link name="right_gripper_link">
+
+        <visual>
+            <origin xyz="0.001 0.002 -0.318" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/right_gripper_link.stl"
+                        scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        
+    </link>
+
+
+    <joint name="right_gripper_joint" type="revolute">
+        <parent link="upper_arm_link"/>
+        <child link="right_gripper_link"/>
+        <origin xyz="-0.015 -0.002 0.160" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-0.35" upper="0.35" effort="100" velocity="1.0"/>
+        <mimic joint="left_gripper_joint" multiplier="-1" offset="0"/>
+    </joint>
+
+
+    <link name="left_gripper_link">
+
+        <visual>
+            <origin xyz="0.001 -0.027 -0.318" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://robot_description/meshes/left_gripper_link.stl"
+                        scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        
+    </link>
+
+
+    <joint name="left_gripper_joint" type="revolute">
+        <parent link="upper_arm_link"/>
+        <child link="left_gripper_link"/>
+        <origin xyz="-0.015 0.025 0.160" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-0.35" upper="0.35" effort="100" velocity="1.0"/>
+    </joint>
+
+
+
+</robot>
